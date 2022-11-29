@@ -1,4 +1,3 @@
-# MTA0Mjg3OTcxOTg2NTA2NTU2Mg.GsFqGM.roDDhpVg1DgfJGLOlNy4zxV84Zr77OSekPiG1s
 import os
 
 import certifi

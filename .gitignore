@@ -2,5 +2,8 @@
 .DS_Store
 ._*
 
+#IntelliJ
+.idea
+
 # Secrets
 .env
