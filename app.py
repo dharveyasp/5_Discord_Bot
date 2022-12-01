@@ -27,7 +27,7 @@ async def on_message(message):
 
 
 client.run(os.getenv('TOKEN'))
-# error getting ssl cert
+# error getting ssl cert (_ssl.c:1122)
 
 # ideas:
 # chat logging
