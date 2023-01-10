@@ -28,7 +28,7 @@ async def on_message(message):
     if message.content.startswith('$hello'):
         await message.channel.send('Hello!')
 
-    if message.content.startswith('$RPS' or '$RockPaperScissors'):
+    if message.content.startswith('$RPS'):
         await message.reply('Pick: Rock, Paper, or Scissors', mention_author=True)
 
         # not entirely sure the purpose of m here, I believe It's if multiple users, id have to do more testing
@@ -38,7 +38,7 @@ async def on_message(message):
         bot_choice = random.choice(choices)
 
         try:
-            game = await client.wait_for('message', check=check, timeout=5.0)
+            game = await client.wait_for('message', check=check, timeout=10.0)
         except asyncio.TimeoutError:
             return await message.channel.send(f'Sorry, you took too long. I chose {bot_choice}')
 
@@ -70,13 +70,8 @@ async def on_message(message):
                 await message.channel.send(f'YOU LOSE! {bot_choice} beats {game.content}')
             elif bot_choice == choices[1]:
                 await message.channel.send(f'YOU WIN! {game.content} beats {bot_choice}')
+        else:
+            await message.channel.send(f'{game.content} is not a valid option, check your spelling! Ending Game...')
 
 
 client.run(os.getenv('TOKEN'))
-# error getting ssl cert (_ssl.c:1122)
-
-# ideas:
-# chat logging
-# chat cleanup
-# game? tictactoe? bingo game based on words in chat - dans idea?
-# reaction roles
