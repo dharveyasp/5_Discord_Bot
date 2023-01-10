@@ -17,7 +17,8 @@ choices = ['Rock', 'Paper', 'Scissors']
 
 @client.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
+    print(f'We have logged in as {client.user} {client.user.id}')
+    print("----------")
 
 
 @client.event
@@ -26,28 +27,31 @@ async def on_message(message):
         return
 
     if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+        await message.reply('Hello!', mention_author=True)
 
     if message.content.startswith('$RPS'):
         await message.reply('Pick: Rock, Paper, or Scissors', mention_author=True)
+        print(f'{message.author} started a game of RPS')
 
-        # not entirely sure the purpose of m here, I believe It's if multiple users, id have to do more testing
-        def check(m):
+        def check_game_user(m):
+            # print(m.author)
+            # print(message.author)
+            # print(m.content)
             return m.author == message.author and m.content
 
         bot_choice = random.choice(choices)
 
         try:
-            game = await client.wait_for('message', check=check, timeout=10.0)
+            game = await client.wait_for('message', check=check_game_user, timeout=10.0)
         except asyncio.TimeoutError:
             return await message.channel.send(f'Sorry, you took too long. I chose {bot_choice}')
 
-        if check:
-            await message.channel.send(f'DEBUG: TRUE {bot_choice}, {game.content}')
-        elif not check:
-            await message.channel.send(f'DEBUG: FALSE {bot_choice}, {game.content}')
-        else:
-            await message.channel.send(f'DEBUG: How did u get here? {bot_choice}, {game.content}')
+        # if game:
+        #     await message.channel.send(f'DEBUG: TRUE {bot_choice}, {game.content}')
+        # elif not game:
+        #     await message.channel.send(f'DEBUG: FALSE {bot_choice}')
+        # else:
+        #     await message.channel.send(f'DEBUG: How did u get here? {bot_choice}')
 
         # Tie
         if game.content == bot_choice:
